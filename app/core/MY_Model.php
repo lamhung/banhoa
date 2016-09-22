@@ -13,7 +13,9 @@ class MY_Model extends Model{
 		//print_r($this->a);
 		//var_dump($this->a);
 		//echo $this->a;
-		//$this->db = new mysqli(HOST, USER_DB, PASS_DB, DB_NAME);
+		$this->db = new mysqli(HOST, USER_DB, PASS_DB, DB_NAME);
+		$this->db->set_charset('utf8');
+		
 		$this->get_table();
 		$this->initialize($table_name);
 		
@@ -27,7 +29,7 @@ class MY_Model extends Model{
 		//if(empty($this->db)) {
 			//$cn = new DB;
 			//$this->db = $cn->connect();
-			$this->db = new mysqli(HOST, USER_DB, PASS_DB, DB_NAME);
+			//$this->db = new mysqli(HOST, USER_DB, PASS_DB, DB_NAME);
 		//}
 		$sql = "SHOW tables";
 		$query = $this->db->query($sql);
