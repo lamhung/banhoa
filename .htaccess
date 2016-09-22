@@ -1,0 +1,22 @@
+<Files .htaccess>
+
+Order Allow,Deny
+
+Deny from all
+
+</Files>
+
+RewriteEngine On
+Options All -Indexes
+
+
+
+AddDefaultCharset UTF-8
+#RewriteBase /banhoa/
+RewriteRule test.php - [L]
+RewriteRule ^assets - [L]
+RewriteRule ^vendor - [L]
+RewriteRule ^upload - [L]
+
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+
