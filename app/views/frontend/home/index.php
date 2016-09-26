@@ -1,4 +1,3 @@
-    
     <div id="templatemo_content">
     
     	<div id="templatemo_content_left">
@@ -16,12 +15,15 @@
                 elseif ($this->current_action=="cat") include "app/views/frontend/sanphamtrongloai/sptrongloai.php";
                 elseif ($this->current_action=="showcart") include "app/views/frontend/giohang/cart_detail.php";
                 elseif ($this->current_action=="muahang") include "app/views/frontend/giohang/formmuahang.php";
+                elseif ($this->current_action=="thanhtoan") include "app/views/frontend/giohang/thanhtoan.php";
              ?>
                 
 
 			<div class="cleaner_with_height">&nbsp;</div>
         </div> <!-- end of ocntent left -->
-        
+        <?php 
+            if($this->current_action!= "thanhtoan") {
+        ?>
         <div id="templatemo_content_right">
             <?php 
             if(isset($_SESSION['login_user'])) {
@@ -81,11 +83,14 @@
 				</div>
             </div>
         </div> <!-- end of content right-->
-        
+        <?php 
+        }
+        ?>
         <div class="cleaner">&nbsp;</div>
+        
 
     </div>
-    <<script  type="text/javascript">
+    <script  type="text/javascript">
         $(document).ready(function(){
             $(".chonhang").click(function(){
                var idsp = $(this).attr("idsp"); 

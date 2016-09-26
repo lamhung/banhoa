@@ -1,5 +1,6 @@
 <?php
 class MY_Model extends Model{
+	public $db;
 	protected $tables = array();
 	protected $table_name = NULL;
 	protected $fields = array();
@@ -7,28 +8,19 @@ class MY_Model extends Model{
 	protected $model ;
 
 	function __construct($table_name) {
-
 		parent::__construct();
-	
-		//print_r($this->a);
-		//var_dump($this->a);
-		//echo $this->a;
-		//$this->db = new mysqli(HOST, USER_DB, PASS_DB, DB_NAME);
+		$connect = DB::getInstance();
+	    $this->db = $connect->getConnection(); 
+	    $this->db->set_charset("utf8");
 		$this->get_table();
 		$this->initialize($table_name);
-		
-		
+		//$this->db = new mysqli(HOST, USER_DB, PASS_DB, DB_NAME);
 	}
 
 	/**
      * Lấy ra các table có trong database
     */
 	function get_table() {
-		//if(empty($this->db)) {
-			//$cn = new DB;
-			//$this->db = $cn->connect();
-			$this->db = new mysqli(HOST, USER_DB, PASS_DB, DB_NAME);
-		//}
 		$sql = "SHOW tables";
 		$query = $this->db->query($sql);
 		foreach($query as $rows) {
@@ -61,9 +53,7 @@ class MY_Model extends Model{
 	
 	/**
      * 
-	
-	 
-	 
+	thực thi truy vấn select  
     */
 	function get_rows($input = array()) {
 		$data = array();
@@ -302,7 +292,7 @@ class MY_Model extends Model{
 		if(is_numeric($conditions)) {
 			$this->where($this->key, $conditions);
 		}
-		else if(isset($conditions['where'])) {
+		else if(is_array($conditions) && isset($conditions['where'])) {
 				if(is_array($conditions['where']) && $conditions['where']) {
 				 	foreach ($conditions['where'] as $f => $c) {
 				 		if(in_array(trim($f), $this->fields)) {
@@ -316,9 +306,10 @@ class MY_Model extends Model{
 		}
 		
 		$query = $this->delete($this->table_name);
-		$this->last_query();
+		//$this->last_query();exit;
 		return $query;
 	}
+	/*
 	function __destruct() {
 		$a = "SHOW FULL PROCESSLIST";
 		$query = $this->db->query($a);
@@ -326,11 +317,7 @@ class MY_Model extends Model{
 			$data[] = $value;
 		}
 		print_r($data);
-
-		
-	
-		
-	}
+	}*/
 	
 	
 	

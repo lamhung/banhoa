@@ -1,9 +1,17 @@
 <?php
-$text = '<p>Test paragraph.</p><!-- Comment --> <a href="#fragment">Other text</a>';
-echo $text;
-echo strip_tags($text);
-//echo "\n";
-
-// Allow <p> and <a>
-//echo strip_tags($text, '<p><a>');
-?>
+class Singleton {
+	private static $instance;
+	private function __construct(){}
+	public static function getInstance(){
+		if(null === static::$instance) {
+			static::$instance = new static;
+			echo 'new';
+            return static::$instance;
+		}
+		echo 'old';
+        return static::$instance;
+	}
+}
+$singleton = Singleton::getInstance(); // new
+$singleton = Singleton::getInstance(); // old
+//$singleton = Singleton::getInstance(); // old

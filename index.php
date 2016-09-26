@@ -8,11 +8,10 @@
 	require_once ("app/config/config.php");
 	require_once ("system/core/Controller.php");
 	require_once ("system/core/DB.php");
-	$cn = new DB;
-	$db = $cn->connect();
+	
 	
 	require_once ("system/core/Model.php");
-	$model = new Model($db);
+	
 	require_once ("app/core/MY_Controller.php");
 	require_once ("app/core/MY_Model.php");
 

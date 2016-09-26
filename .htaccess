@@ -13,6 +13,7 @@ Options All -Indexes
 
 AddDefaultCharset UTF-8
 #RewriteBase /banhoa/
+RewriteRule nganluong_884ded945952bfd8c66b588cb1de1ecb.html [L]
 RewriteRule test.php - [L]
 RewriteRule ^assets - [L]
 RewriteRule ^vendor - [L]

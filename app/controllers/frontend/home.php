@@ -106,7 +106,7 @@ class home extends MY_Controller {
 		$kq = $this->model_giohang->checklogin();
 		if (!$kq) {
 			$_SESSION['back_front']=$_SERVER['REQUEST_URI'];
-			header("location:". BASE_DIR."login" );
+			header("location:". BASE_URL."login" );
 		}
 		$user_login = $_SESSION['login_user'];
 
@@ -141,41 +141,32 @@ class home extends MY_Controller {
 					if($result) {
 						$post_chitiet = array();
 						$idDH = $_SESSION['idDH'];
-						$this->model_donhangchitiet->delete_row(array('idDH'=>$idDH));
-
+						
+						$this->model_donhangchitiet->delete_row(array('where' =>array('idDH' => $idDH)));
 						$post_chitiet['idDH'] = $_SESSION['idDH'];
 						$sosp = count($_SESSION['daysoluong']);
 						reset( $_SESSION['daysoluong'] );
 						reset( $_SESSION['daydongia'] );
 						reset( $_SESSION['daytensp'] );
-
 						for ($i = 0; $i<$sosp ; $i++) {
-
 						   	$post_chitiet['idSP']= key( $_SESSION['daysoluong'] );
 						   	$post_chitiet['TenSP'] = current( $_SESSION['daytensp'] );
 						   	$post_chitiet['SoLuong'] = current( $_SESSION['daysoluong'] );
 						   	$post_chitiet['Gia'] = current( $_SESSION['daydongia'] );
-						   	$result_ct = $this->model_donhangchitiet->insert_row($post_chitiet);
-						   
+						   	$result_ct = $this->model_donhangchitiet->insert_row($post_chitiet);	   
 						   	next( $_SESSION['daysoluong'] );
 						   	next( $_SESSION['daydongia'] );
 						   	next( $_SESSION['daytensp'] );
 						}
-
 						if($result_ct) {
-							//unset($_SESSION['daytensp']);
-							//unset($_SESSION['daydongia']);
-							//unset($_SESSION['daysoluong']);
-							echo "<script>alert('Đặt hàng thành công')</script>";
-							echo "<script>window.location.href='".BASE_URL."'</script>";
+							//echo "<script>alert('Đặt hàng thành công')</script>";
+							header('location:'.BASE_URL.'thanhtoan'); exit();
+							//echo "<script>window.location.href='".BASE_URL."'</script>";
 						}
 					}
 				}
 			}
-		}
-		
-
-
+		}		
 		$this->data['user'] =$this->model_user_front->get_by($user_login['id_user']);
 		$this->data['error'] = $error;
 
@@ -183,6 +174,16 @@ class home extends MY_Controller {
 		$this->view('frontend/home/index',$this->data);
 		$this->view('frontend/layout/footer');
 	}
+	function thanhtoan(){
+		if (!isset($_SESSION['idDH'])) return;
+		$donhang = $this->model_giohang->get_by(array('where' => array('iddh' => $_SESSION['idDH'])));
+
+		$this->data['ttdh'] = $this->model_giohang->convert_data($donhang);
+
+		$this->view('frontend/layout/header');
+		$this->view('frontend/home/index',$this->data);
+		$this->view('frontend/layout/footer');
+	}//thanhtoan
 
 
 

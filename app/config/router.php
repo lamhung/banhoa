@@ -50,6 +50,7 @@ function router() {
 	$router['showcart_detail'] = 'frontend/addtocart/showcart_detail';
 	$router['showcart'] = 'frontend/home/showcart';
 	$router['muahang'] = 'frontend/home/muahang';
+	$router['thanhtoan'] = 'frontend/home/thanhtoan';
 	//$router["(:any).html"] = "frontend/home/detail";
 	//$router["(:any)/trang"] = "frontend/home/cat";
 	//$router["(:any)/trang-(:num)"] = "frontend/home/cat";

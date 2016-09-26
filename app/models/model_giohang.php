@@ -45,6 +45,32 @@ class model_giohang extends MY_Model {
 	  foreach ($kq as $row) $data[] = $row;
 	  return $data;
 	}//ptgh
+	function get_row_pttt($id_pttt = ""){
+		$sql="SELECT tenphuongthuctt
+		  FROM phuongthucthanhtoan where idpttt = '$id_pttt'";
+		 $result  = $this->query($sql);
+		 //print_r($result);
+		 return $result;
+	}
+	function get_row_ptgh($id_ptgh = ""){
+		$sql="SELECT tenphuongthucgh,phi 
+		  FROM phuongthucgiaohang where idptgh = '$id_ptgh'";
+		  $result  = $this->query($sql);
+		  return $result;
+	}
+
+	function convert_data($data = array()) {
+		if(isset($data['idpttt'])) {
+			$pttt = $this->get_row_pttt($data['idpttt']);
+			$data['_pttt'] = $pttt[0]['tenphuongthuctt'];
+		}
+		if(isset($data['idptgh'])) {
+			$ptgh = $this->get_row_ptgh($data['idptgh']);
+			$data['_ptgh'] = $ptgh[0]['tenphuongthucgh'];
+			$data['_ptgh_phi'] = $ptgh[0]['phi'].' Đồng';
+		}
+		return $data;
+	}
 
 
 

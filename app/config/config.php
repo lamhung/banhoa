@@ -1,6 +1,6 @@
 <?php
-	define('BASE_URL', 'http://localhost/banhoa1/');
-	define('BASE_DIR', '/banhoa1/');
+	define('BASE_URL', 'http://localhost/banhoa/');
+	define('BASE_DIR', '/banhoa/');
 	define('HOST', 'localhost');
 	define('DB_NAME', 'banhoa');
 	define('USER_DB', 'root');

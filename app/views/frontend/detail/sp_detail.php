@@ -18,3 +18,4 @@
 <div id="baiviet"><?=$chitietsp['baiviet']?></div>
 </div> 
 <hr style="clear:both" />
+<div class="fb-comments" data-href="http://xachtaycongnghe.com" data-colorscheme="light" data-numposts="5" data-width="630"></div>
