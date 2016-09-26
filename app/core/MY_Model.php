@@ -9,6 +9,7 @@ class MY_Model extends Model{
 
 	function __construct($table_name) {
 		parent::__construct();
+
 		$connect = DB::getInstance();
 	    $this->db = $connect->getConnection(); 
 	    $this->db->set_charset("utf8");
