@@ -77,34 +77,53 @@
 		$router = router();
 		$url = parseUrl();
 		$array = array();
-		foreach ($router as $key => $value) {
-			$key  = str_replace(array('(:num)', '(:any)'), array('([0-9]+)', '([^/]+)'), $key);
-			$pattern = '#^'.$key.'$#';
+		if(count($router) > 0) {
+			foreach ($router as $key => $value) {
+				$key  = str_replace(array('(:num)', '(:any)'), array('([0-9]+)', '([^/]+)'), $key);
+				$pattern = '#^'.$key.'$#';
 
-			if($url != "") {
-				if (preg_match($pattern, $url, $matches)){
-				    unset($matches[0]);
-				    $array['params']= array_values($matches);
-				    $array['url_router'] = $value;
-				    //print_r($array);
-				    return $array;
+				if($url != "") {
+					if (preg_match($pattern, $url, $matches)){
+					    unset($matches[0]);
+					    $array['params']= array_values($matches);
+					    $array['url_router'] = $value;
+					    //print_r($array);
+					    return $array;
+					}
 
-				} else {
-					continue;
-				}	
-			}else {
-				if (preg_match($pattern, 'default_controller', $matches)){    
-				    $array['params'] = NULL;
-				    $array['url_router'] = $value;
-				    //print_r($array);
-				    return $array;
 				}else {
-					continue;
-				}
-			} 
+					if (preg_match($pattern, 'default_controller', $matches)){    
+					    $array['params'] = NULL;
+					    $array['url_router'] = $value;
+					    //print_r($array);
+					    return $array;
+					}else {
+						continue;
+					}
+				} 
+			}
 		}
 		if(count($array) == 0) {
-			die(require_once 'app/views/errors/error_404.php');
+
+			$arr = explode('/',trim($url,'/'));
+			$count = 0;
+			$app_path  = APP_PATH;
+			$path = '';
+			//print_r($arr);
+			foreach ($arr as $v) {
+				$app_path.='/'.$v;
+				if(is_dir($app_path)) {
+					$path =	$app_path;
+					$count += 1;
+				}
+			}
+			for($i= 0; $i<$count+2;$i++) {
+				array_shift($arr);
+			}
+			$array['params']= $arr;
+			$array['url_router'] = $url;
+			return $array;	
+			//die(require_once 'app/views/errors/error_404.php');
 		}	
 	}
 	//set_routing();
@@ -115,7 +134,7 @@
 
 		$array = set_routing();
 		$count = 0;
-		$app_path  = APP_PATH;
+		$app_path  = APP_PATH;//Đường đẫn đến thư mục controller
 		$arr = explode('/',trim($array['url_router'], '/'));
 		$path = '';
 			//print_r($arr);
